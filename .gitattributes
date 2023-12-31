@@ -1,3 +1,4 @@
 * linguist-vendored
+*.Python linguist-detectable=true
 *.JavaScript linguist-vendored=false
-*.python linguist-detectable=true
+
