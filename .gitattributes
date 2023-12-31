@@ -1,4 +1,3 @@
 * linguist-vendored
 *.Python linguist-detectable=true
-*.JavaScript linguist-vendored=false
 
