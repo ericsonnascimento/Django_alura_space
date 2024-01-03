@@ -1,5 +1,6 @@
 from django import forms
 
+
 class LoginForms(forms.Form):
     nome_login = forms.CharField(
         label='Nome de Login',
@@ -24,6 +25,7 @@ class LoginForms(forms.Form):
             }
         )
     )
+
 
 class CadastroFroms(forms.Form):
     nome_cadastro = forms.CharField(
@@ -70,3 +72,13 @@ class CadastroFroms(forms.Form):
             }
         )
     )
+
+    def clean_nome_cadastro(self):
+        nome = self.cleaned_data.get('nome_cadastro')
+
+        if nome:
+            nome = nome.strip()
+            if ' ' in nome:
+                raise forms.ValidationError('Não é permitido espaços neste campo')
+            else:
+                return nome
