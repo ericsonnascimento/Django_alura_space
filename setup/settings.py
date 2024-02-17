@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.galeria.apps.GaleriaConfig',
     'apps.usuarios.apps.UsuariosConfig',
+
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -125,11 +127,45 @@ USE_I18N = True
 
 USE_TZ = True
 
+# AWS Configuração
+
+AWS_ACCESS_KEY_ID = 'AKIAYCZPBFSGSBW44PEN'
+
+AWS_SECRET_ACCESS_KEY = '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'
+
+AWS_STORAGE_BUCKET_NAME = 'fotografias-alura-space-grupocyber'
+
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+
+AWS_DEFAULT_ACL = 'public-read'
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400'
+}
+
+AWS_LOCATION = 'static'
+
+AWS_QUERYSTRING_AUTH = False
+
+AWS_HEADERS = {
+    'Access-Control-Allow-Origin': '*',
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        #"OPTIONS": {
+        #  ...your_options_here
+        #},
+    },
+}
+
+STATICFILES_STORAGE = "storages.backends.s3.S3Storage"
+
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'setup/static')
@@ -141,7 +177,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-MEDIA_URL = 'media/'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
